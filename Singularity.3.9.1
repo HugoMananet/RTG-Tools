@@ -1,0 +1,23 @@
+#!/bin/bash
+#
+
+Bootstrap: docker
+From: phusion/baseimage:0.11
+
+%label
+	MAINTAINER Hugo Mananet
+	VERSION 3.9.1
+
+
+%post
+	apt-get -y update
+	apt-get -y install build-essential \
+	wget \
+	openjdk-8-jre \
+
+	mkdir -p /opt/rtg-3.9.1/
+	wget https://github.com/RealTimeGenomics/rtg-tools/releases/download/3.9.1/rtg-tools-3.9.1-nojre.zip
+
+	tar -xvf rtg-tools-3.9.1-nojre.zip && mv rtg-tools-3.9.1/ /opt/
+
+	ln -s /opt/rtg-tools-3.9.1/rtg /usr/local/bin
